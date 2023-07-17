@@ -1,0 +1,27 @@
+debug: true
+
+# For basic producer
+logging:
+  level:
+    org.springframework.kafka.transaction: TRACE
+    org.springframework.kafka.producer: TRACE
+    org.springframework.kafka.core: TRACE
+spring:
+  kafka:
+    producer:
+      transaction-id-prefix: mySupplier-
+  cloud:
+    stream:
+      bindings:
+        mySupplier-out-0:
+          destination: myTopic1
+      kafka:
+        binder:
+#          configuration:
+#            isolation.level: read_committed
+          transaction:
+#            transaction-id-prefix: mySupplier-
+            producer:
+              configuration:
+                retries: 1
+                acks: all
